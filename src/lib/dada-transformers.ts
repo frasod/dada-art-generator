@@ -2,12 +2,31 @@ export type TransformStyle = 'cutup' | 'phonetic' | 'salad' | 'anarchy';
 
 const nonsenseSyllables = [
   'blorp', 'zzzzt', 'krak', 'biff', 'splat', 'whoosh', 'klunk', 
-  'boing', 'fwip', 'grok', 'zap', 'bonk', 'thwack', 'plonk'
+  'boing', 'fwip', 'grok', 'zap', 'bonk', 'thwack', 'plonk',
+  'glorp', 'zorp', 'blip', 'schnook', 'bwam', 'fzzz', 'tunk'
 ];
 
 const dadaWords = [
   'DADA', 'anti', 'neo', 'quasi', 'pseudo', 'meta', 'proto', 
-  'uber', 'non', 'post', 'pre', 'contra', 'infra'
+  'uber', 'non', 'post', 'pre', 'contra', 'infra', 'ultra',
+  'supra', 'hyper', 'para', 'trans', 'inter', 'sub'
+];
+
+const dadaPrefixes = [
+  '>>>', '***', '<<<', '~~~', '###', '+++', '---', ':::', '...', '!!!'
+];
+
+const manifestoPhrases = [
+  'DADA MEANS NOTHING',
+  'DESTROY TO CREATE',
+  'ANTI-ART IS ART',
+  'CHAOS IS ORDER',
+  'MEANING IS MEANINGLESS',
+  'THE ABSURD IS REAL',
+  'REJECT ALL LOGIC',
+  'EMBRACE NONSENSE',
+  'ART IS DEAD',
+  'LONG LIVE DADA'
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -40,16 +59,32 @@ export function cutUpMethod(text: string): string {
   if (!text.trim()) return '';
   
   const words = text.trim().split(/\s+/);
-  const shuffled = shuffleArray(words);
-  const withNonsense = insertRandomNonsense(shuffled);
+  const lines: string[] = [];
   
-  const chunkSize = Math.floor(Math.random() * 4) + 3;
-  const chunks: string[] = [];
-  for (let i = 0; i < withNonsense.length; i += chunkSize) {
-    chunks.push(withNonsense.slice(i, i + chunkSize).join(' '));
+  for (let lineNum = 0; lineNum < 4 + Math.floor(Math.random() * 3); lineNum++) {
+    const shuffled = shuffleArray(words);
+    const withNonsense = insertRandomNonsense(shuffled);
+    
+    const lineLength = Math.min(8 + Math.floor(Math.random() * 8), withNonsense.length);
+    const selectedWords = withNonsense.slice(0, lineLength);
+    
+    const chunkSize = Math.floor(Math.random() * 3) + 2;
+    const chunks: string[] = [];
+    for (let i = 0; i < selectedWords.length; i += chunkSize) {
+      chunks.push(selectedWords.slice(i, i + chunkSize).join(' '));
+    }
+    
+    const prefix = dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)];
+    const line = `${prefix} ${shuffleArray(chunks).join(' / ')}`;
+    lines.push(line);
   }
   
-  return shuffleArray(chunks).join(' / ');
+  if (Math.random() > 0.5) {
+    const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
+    lines.splice(Math.floor(Math.random() * lines.length), 0, `\n*** ${manifesto} ***\n`);
+  }
+  
+  return lines.join('\n');
 }
 
 export function phoneticChaos(text: string): string {
@@ -58,91 +93,160 @@ export function phoneticChaos(text: string): string {
   const substitutions: Record<string, string> = {
     'a': 'ä', 'e': 'ë', 'i': 'ï', 'o': 'ö', 'u': 'ü',
     's': 'z', 'c': 'k', 'ph': 'f', 'tion': 'shun',
-    'the': 'ze', 'ing': 'ink', 'ch': 'tch'
+    'the': 'ze', 'ing': 'ink', 'ch': 'tch', 'x': 'cks'
   };
   
-  let result = text.toLowerCase();
+  const words = text.trim().split(/\s+/);
+  const lines: string[] = [];
   
-  Object.entries(substitutions).forEach(([from, to]) => {
-    if (Math.random() > 0.3) {
-      result = result.replace(new RegExp(from, 'g'), to);
-    }
-  });
-  
-  const words = result.split(/\s+/);
-  const transformed = words.map(word => {
+  for (let lineNum = 0; lineNum < 5 + Math.floor(Math.random() * 3); lineNum++) {
+    let lineWords = shuffleArray(words).slice(0, 6 + Math.floor(Math.random() * 6));
+    
+    lineWords = lineWords.map(word => {
+      let result = word.toLowerCase();
+      
+      Object.entries(substitutions).forEach(([from, to]) => {
+        if (Math.random() > 0.4) {
+          result = result.replace(new RegExp(from, 'g'), to);
+        }
+      });
+      
+      if (Math.random() > 0.6) {
+        result = randomCase(result);
+      }
+      
+      if (Math.random() > 0.8) {
+        result = result.split('').reverse().join('');
+      }
+      
+      return result;
+    });
+    
+    const withNonsense = insertRandomNonsense(lineWords);
+    
     if (Math.random() > 0.7) {
-      return randomCase(word);
+      const dadaWord = dadaWords[Math.floor(Math.random() * dadaWords.length)];
+      withNonsense.splice(Math.floor(Math.random() * withNonsense.length), 0, dadaWord);
     }
-    return word;
-  });
+    
+    lines.push(withNonsense.join(' '));
+  }
   
-  const withDada = insertRandomNonsense(transformed);
-  return withDada.join(' ').replace(/\s+/g, ' ');
+  return lines.join('\n');
 }
 
 export function wordSalad(text: string): string {
   if (!text.trim()) return '';
   
   const words = text.trim().split(/\s+/);
-  const shuffled = shuffleArray(words);
+  const lines: string[] = [];
   
-  const enhanced = shuffled.flatMap((word, i) => {
-    const result = [word];
+  for (let lineNum = 0; lineNum < 6 + Math.floor(Math.random() * 3); lineNum++) {
+    const shuffled = shuffleArray(words);
+    const lineWords = shuffled.slice(0, 5 + Math.floor(Math.random() * 8));
     
-    if (Math.random() > 0.6) {
-      result.push(dadaWords[Math.floor(Math.random() * dadaWords.length)]);
-    }
+    const enhanced = lineWords.flatMap((word, i) => {
+      const result = [word];
+      
+      if (Math.random() > 0.5) {
+        result.push(dadaWords[Math.floor(Math.random() * dadaWords.length)]);
+      }
+      
+      if (Math.random() > 0.7) {
+        result.push(randomCase(word.split('').reverse().join('')));
+      }
+      
+      if (Math.random() > 0.85) {
+        result.push(nonsenseSyllables[Math.floor(Math.random() * nonsenseSyllables.length)]);
+      }
+      
+      return result;
+    });
     
-    if (Math.random() > 0.8 && i < shuffled.length - 1) {
-      result.push(randomCase(word.split('').reverse().join('')));
-    }
+    const cased = enhanced.map(w => {
+      const rand = Math.random();
+      if (rand > 0.7) {
+        return w.toUpperCase();
+      } else if (rand > 0.4) {
+        return randomCase(w);
+      }
+      return w.toLowerCase();
+    });
     
-    return result;
-  });
+    const prefix = Math.random() > 0.6 
+      ? dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)] + ' '
+      : '';
+    
+    lines.push(prefix + cased.join(' '));
+  }
   
-  return enhanced.map(w => {
-    if (Math.random() > 0.5) {
-      return w.toUpperCase();
-    }
-    return w.toLowerCase();
-  }).join(' ');
+  if (Math.random() > 0.6) {
+    const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
+    lines.push(`\n${manifesto}`);
+  }
+  
+  return lines.join('\n');
 }
 
 export function typographicAnarchy(text: string): string {
   if (!text.trim()) return '';
   
   const words = text.split(/\s+/);
-  const punctuation = ['!', '?', '...', '!!', '!?', '???', '*', '~', '@', '#'];
+  const punctuation = ['!', '?', '...', '!!', '!?', '???', '*', '~', '@', '#', '^', '&'];
+  const lines: string[] = [];
   
-  const chaotic = words.map(word => {
-    let result = randomCase(word);
+  for (let lineNum = 0; lineNum < 5 + Math.floor(Math.random() * 4); lineNum++) {
+    const shuffled = shuffleArray(words);
+    const lineWords = shuffled.slice(0, 4 + Math.floor(Math.random() * 6));
     
-    if (Math.random() > 0.7) {
-      const punct = punctuation[Math.floor(Math.random() * punctuation.length)];
-      result = Math.random() > 0.5 ? punct + result : result + punct;
-    }
+    const chaotic = lineWords.map(word => {
+      let result = randomCase(word);
+      
+      if (Math.random() > 0.6) {
+        const punct = punctuation[Math.floor(Math.random() * punctuation.length)];
+        result = Math.random() > 0.5 ? punct + result : result + punct;
+      }
+      
+      if (Math.random() > 0.8) {
+        result = result.split('').join('-');
+      }
+      
+      if (Math.random() > 0.85) {
+        const brackets = [['[', ']'], ['{', '}'], ['(', ')'], ['<', '>']];
+        const bracket = brackets[Math.floor(Math.random() * brackets.length)];
+        result = `${bracket[0]}${result}${bracket[1]}`;
+      }
+      
+      if (Math.random() > 0.9) {
+        result = result.toUpperCase() + '!!!';
+      }
+      
+      return result;
+    });
     
-    if (Math.random() > 0.85) {
-      result = result.split('').join('-');
-    }
+    let line = chaotic.join(' ');
     
-    if (Math.random() > 0.9) {
-      result = `[${result}]`;
-    }
+    const lineChars = line.split('');
+    const final = lineChars.map(char => {
+      if (char === ' ' && Math.random() > 0.8) {
+        return ' / ';
+      }
+      return char;
+    }).join('');
     
-    return result;
-  });
+    const prefix = Math.random() > 0.5
+      ? dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)] + ' '
+      : '';
+    
+    lines.push(prefix + final);
+  }
   
-  const withBreaks = chaotic.join(' ').split('');
-  const final = withBreaks.map(char => {
-    if (char === ' ' && Math.random() > 0.85) {
-      return ' / ';
-    }
-    return char;
-  }).join('');
+  if (Math.random() > 0.5) {
+    const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
+    lines.splice(Math.floor(lines.length / 2), 0, `\n*** ${manifesto} ***\n`);
+  }
   
-  return final;
+  return lines.join('\n');
 }
 
 export function transform(text: string, style: TransformStyle): string {

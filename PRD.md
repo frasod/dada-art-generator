@@ -13,11 +13,11 @@ A playful web tool that transforms any text input into absurdist Dada-style art 
 ## Essential Features
 
 ### Text-to-Dada Transformation
-- **Functionality**: Takes any text input and applies Dada-style transformations (random word order, letter substitutions, nonsense insertions, case randomization, punctuation chaos)
-- **Purpose**: Embodies the Dada philosophy of chance and anti-art, making the mundane absurd
+- **Functionality**: Takes any text input and applies Dada-style transformations (random word order, letter substitutions, nonsense insertions, case randomization, punctuation chaos), generating substantial multi-line output (minimum 4-8 lines) with manifesto phrases and generative variations
+- **Purpose**: Embodies the Dada philosophy of chance and anti-art, making the mundane absurd through expansive, poetic chaos
 - **Trigger**: User types or pastes text into an input field
-- **Progression**: User enters text → Clicks "Dadafy" button → System applies multiple random transformations → Output displays in stylized format → User can copy or regenerate
-- **Success criteria**: Every transformation produces genuinely unpredictable results that feel authentically nonsensical yet somehow artful
+- **Progression**: User enters text → Clicks "Dadafy" button → System applies multiple random transformations → Output displays as multi-line generative text with visual prefixes and manifesto interjections → User can copy or regenerate
+- **Success criteria**: Every transformation produces genuinely unpredictable, substantial multi-line results that feel authentically nonsensical yet somehow artful, with each generation being unique
 
 ### Multiple Transformation Styles
 - **Functionality**: Offers 3-4 different Dada transformation algorithms (Cut-Up Method, Phonetic Chaos, Word Salad, Typographic Anarchy)

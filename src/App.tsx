@@ -116,9 +116,11 @@ function App() {
               )}
             </div>
             <div 
-              className={`min-h-[200px] p-4 bg-muted border-2 border-foreground font-mono text-base break-words overflow-y-auto ${isGlitching ? 'glitch' : ''}`}
+              className={`min-h-[200px] max-h-[400px] p-4 bg-muted border-2 border-foreground font-mono text-base break-words overflow-y-auto ${isGlitching ? 'glitch' : ''}`}
             >
-              {output || (
+              {output ? (
+                <pre className="whitespace-pre-wrap font-mono leading-relaxed">{output}</pre>
+              ) : (
                 <span className="text-muted-foreground italic">
                   awaiting transformation...
                 </span>
