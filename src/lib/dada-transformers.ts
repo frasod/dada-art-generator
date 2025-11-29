@@ -26,7 +26,37 @@ const manifestoPhrases = [
   'REJECT ALL LOGIC',
   'EMBRACE NONSENSE',
   'ART IS DEAD',
-  'LONG LIVE DADA'
+  'LONG LIVE DADA',
+  'REASON IS THE ENEMY',
+  'BURN THE MUSEUMS',
+  'ABOLISH AESTHETICS',
+  'NOTHING IS SACRED',
+  'SENSE MAKES NO SENSE',
+  'CONFUSION IS CLARITY',
+  'BEAUTY IS UGLY',
+  'LOGIC BETRAYS TRUTH',
+  'RANDOMNESS REVEALS',
+  'WORDS MEAN VOID',
+  'SYSTEMS MUST FALL',
+  'FRAGMENTS UNITE',
+  'NONSENSE SPEAKS',
+  'SILENCE SCREAMS',
+  'EMPTINESS FILLS',
+  'BORDERS DISSOLVE',
+  'STRUCTURE CRUMBLES',
+  'TIME IS ILLUSION',
+  'CONVENTION DIES',
+  'FREEDOM THROUGH CHAOS',
+  'REJECT PERFECTION',
+  'MADNESS IS METHOD',
+  'INCOHERENCE COHERES',
+  'BABEL TOWER RISES',
+  'LANGUAGE EXPLODES',
+  'GRAMMAR IS TYRANNY',
+  'SYNTAX SUFFOCATES',
+  'RULES ARE CHAINS',
+  'TASTE IS PRISON',
+  'TRADITION ENDS NOW'
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -79,7 +109,7 @@ export function cutUpMethod(text: string): string {
     lines.push(line);
   }
   
-  if (Math.random() > 0.5) {
+  if (Math.random() > 0.75) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.splice(Math.floor(Math.random() * lines.length), 0, `\n*** ${manifesto} ***\n`);
   }
@@ -180,7 +210,7 @@ export function wordSalad(text: string): string {
     lines.push(prefix + cased.join(' '));
   }
   
-  if (Math.random() > 0.6) {
+  if (Math.random() > 0.8) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.push(`\n${manifesto}`);
   }
@@ -241,7 +271,7 @@ export function typographicAnarchy(text: string): string {
     lines.push(prefix + final);
   }
   
-  if (Math.random() > 0.5) {
+  if (Math.random() > 0.75) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.splice(Math.floor(lines.length / 2), 0, `\n*** ${manifesto} ***\n`);
   }
