@@ -91,11 +91,13 @@ export function cutUpMethod(text: string): string {
   const words = text.trim().split(/\s+/);
   const lines: string[] = [];
   
-  for (let lineNum = 0; lineNum < 4 + Math.floor(Math.random() * 3); lineNum++) {
+  const numLines = 6 + Math.floor(Math.random() * 4);
+  
+  for (let lineNum = 0; lineNum < numLines; lineNum++) {
     const shuffled = shuffleArray(words);
     const withNonsense = insertRandomNonsense(shuffled);
     
-    const lineLength = Math.min(8 + Math.floor(Math.random() * 8), withNonsense.length);
+    const lineLength = Math.min(8 + Math.floor(Math.random() * 10), withNonsense.length);
     const selectedWords = withNonsense.slice(0, lineLength);
     
     const chunkSize = Math.floor(Math.random() * 3) + 2;
@@ -104,12 +106,13 @@ export function cutUpMethod(text: string): string {
       chunks.push(selectedWords.slice(i, i + chunkSize).join(' '));
     }
     
-    const prefix = dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)];
-    const line = `${prefix} ${shuffleArray(chunks).join(' / ')}`;
+    const usePrefix = Math.random() > 0.3;
+    const prefix = usePrefix ? dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)] : '';
+    const line = usePrefix ? `${prefix} ${shuffleArray(chunks).join(' / ')}` : shuffleArray(chunks).join(' / ');
     lines.push(line);
   }
   
-  if (Math.random() > 0.75) {
+  if (Math.random() > 0.85) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.splice(Math.floor(Math.random() * lines.length), 0, `\n*** ${manifesto} ***\n`);
   }
@@ -129,8 +132,10 @@ export function phoneticChaos(text: string): string {
   const words = text.trim().split(/\s+/);
   const lines: string[] = [];
   
-  for (let lineNum = 0; lineNum < 5 + Math.floor(Math.random() * 3); lineNum++) {
-    let lineWords = shuffleArray(words).slice(0, 6 + Math.floor(Math.random() * 6));
+  const numLines = 7 + Math.floor(Math.random() * 4);
+  
+  for (let lineNum = 0; lineNum < numLines; lineNum++) {
+    let lineWords = shuffleArray(words).slice(0, 6 + Math.floor(Math.random() * 8));
     
     lineWords = lineWords.map(word => {
       let result = word.toLowerCase();
@@ -141,11 +146,11 @@ export function phoneticChaos(text: string): string {
         }
       });
       
-      if (Math.random() > 0.6) {
+      if (Math.random() > 0.5) {
         result = randomCase(result);
       }
       
-      if (Math.random() > 0.8) {
+      if (Math.random() > 0.75) {
         result = result.split('').reverse().join('');
       }
       
@@ -154,7 +159,7 @@ export function phoneticChaos(text: string): string {
     
     const withNonsense = insertRandomNonsense(lineWords);
     
-    if (Math.random() > 0.7) {
+    if (Math.random() > 0.6) {
       const dadaWord = dadaWords[Math.floor(Math.random() * dadaWords.length)];
       withNonsense.splice(Math.floor(Math.random() * withNonsense.length), 0, dadaWord);
     }
@@ -171,9 +176,11 @@ export function wordSalad(text: string): string {
   const words = text.trim().split(/\s+/);
   const lines: string[] = [];
   
-  for (let lineNum = 0; lineNum < 6 + Math.floor(Math.random() * 3); lineNum++) {
+  const numLines = 8 + Math.floor(Math.random() * 4);
+  
+  for (let lineNum = 0; lineNum < numLines; lineNum++) {
     const shuffled = shuffleArray(words);
-    const lineWords = shuffled.slice(0, 5 + Math.floor(Math.random() * 8));
+    const lineWords = shuffled.slice(0, 5 + Math.floor(Math.random() * 10));
     
     const enhanced = lineWords.flatMap((word, i) => {
       const result = [word];
@@ -182,11 +189,11 @@ export function wordSalad(text: string): string {
         result.push(dadaWords[Math.floor(Math.random() * dadaWords.length)]);
       }
       
-      if (Math.random() > 0.7) {
+      if (Math.random() > 0.65) {
         result.push(randomCase(word.split('').reverse().join('')));
       }
       
-      if (Math.random() > 0.85) {
+      if (Math.random() > 0.8) {
         result.push(nonsenseSyllables[Math.floor(Math.random() * nonsenseSyllables.length)]);
       }
       
@@ -203,14 +210,14 @@ export function wordSalad(text: string): string {
       return w.toLowerCase();
     });
     
-    const prefix = Math.random() > 0.6 
+    const prefix = Math.random() > 0.5 
       ? dadaPrefixes[Math.floor(Math.random() * dadaPrefixes.length)] + ' '
       : '';
     
     lines.push(prefix + cased.join(' '));
   }
   
-  if (Math.random() > 0.8) {
+  if (Math.random() > 0.9) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.push(`\n${manifesto}`);
   }
@@ -225,29 +232,31 @@ export function typographicAnarchy(text: string): string {
   const punctuation = ['!', '?', '...', '!!', '!?', '???', '*', '~', '@', '#', '^', '&'];
   const lines: string[] = [];
   
-  for (let lineNum = 0; lineNum < 5 + Math.floor(Math.random() * 4); lineNum++) {
+  const numLines = 7 + Math.floor(Math.random() * 5);
+  
+  for (let lineNum = 0; lineNum < numLines; lineNum++) {
     const shuffled = shuffleArray(words);
-    const lineWords = shuffled.slice(0, 4 + Math.floor(Math.random() * 6));
+    const lineWords = shuffled.slice(0, 4 + Math.floor(Math.random() * 8));
     
     const chaotic = lineWords.map(word => {
       let result = randomCase(word);
       
-      if (Math.random() > 0.6) {
+      if (Math.random() > 0.5) {
         const punct = punctuation[Math.floor(Math.random() * punctuation.length)];
         result = Math.random() > 0.5 ? punct + result : result + punct;
       }
       
-      if (Math.random() > 0.8) {
+      if (Math.random() > 0.75) {
         result = result.split('').join('-');
       }
       
-      if (Math.random() > 0.85) {
+      if (Math.random() > 0.8) {
         const brackets = [['[', ']'], ['{', '}'], ['(', ')'], ['<', '>']];
         const bracket = brackets[Math.floor(Math.random() * brackets.length)];
         result = `${bracket[0]}${result}${bracket[1]}`;
       }
       
-      if (Math.random() > 0.9) {
+      if (Math.random() > 0.85) {
         result = result.toUpperCase() + '!!!';
       }
       
@@ -271,7 +280,7 @@ export function typographicAnarchy(text: string): string {
     lines.push(prefix + final);
   }
   
-  if (Math.random() > 0.75) {
+  if (Math.random() > 0.9) {
     const manifesto = manifestoPhrases[Math.floor(Math.random() * manifestoPhrases.length)];
     lines.splice(Math.floor(lines.length / 2), 0, `\n*** ${manifesto} ***\n`);
   }
