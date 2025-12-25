@@ -4,9 +4,11 @@ import { defineConfig, PluginOption } from "vite";
 
 import sparkPlugin from "@github/spark/spark-vite-plugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
-import { resolve } from 'path'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const projectRoot = process.env.PROJECT_ROOT || import.meta.dirname
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const projectRoot = process.env.PROJECT_ROOT || __dirname
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -19,7 +21,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(projectRoot, 'src')
+      '@': path.resolve(projectRoot, 'src')
     }
   },
 });
