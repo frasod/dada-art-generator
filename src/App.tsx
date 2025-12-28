@@ -27,9 +27,20 @@ function App() {
 
     setIsGlitching(true)
     setTimeout(() => {
-      const result = transform(input, style)
-      setOutput(result)
-      setIsGlitching(false)
+      try {
+        const result = transform(input, style)
+        if (result && result.trim()) {
+          setOutput(result)
+        } else {
+          setOutput('DADA VOID')
+        }
+      } catch (error) {
+        console.error('Transform error:', error)
+        toast.error('Chaos malfunction!')
+        setOutput('')
+      } finally {
+        setIsGlitching(false)
+      }
     }, 300)
   }
 
