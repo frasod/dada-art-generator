@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { Shuffle, Copy, Lightning, Sparkle } from '@phosphor-icons/react'
-import { toast } from 'sonner'
+import { toast, Toaster } from 'sonner'
 import { transform, transformStyles, type TransformStyle } from '@/lib/dada-transformers'
 
 function App() {
@@ -53,6 +53,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-8 relative overflow-hidden">
+      <Toaster position="bottom-center" />
       <div className="absolute top-10 right-10 w-32 h-32 bg-secondary opacity-20 float hidden md:block" style={{ transform: 'rotate(15deg)' }} />
       <div className="absolute bottom-20 left-20 w-24 h-24 bg-accent opacity-20 float hidden md:block" style={{ transform: 'rotate(-12deg)', animationDelay: '2s' }} />
       
