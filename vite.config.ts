@@ -13,7 +13,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': '/workspaces/spark-template/src'
+      '@': '/home/frasod/projects/Dada/dada-art-generator/src'
     }
   },
   optimizeDeps: {
