@@ -14,7 +14,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': '/home/frasod/projects/Dada/dada-art-generator/src'
+      '@': new URL('./src', import.meta.url).pathname
     }
   },
   optimizeDeps: {
