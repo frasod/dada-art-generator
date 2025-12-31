@@ -125,13 +125,13 @@ function App() {
                 </Badge>
               )}
             </div>
-            <div 
-              className={`min-h-[200px] max-h-[400px] p-4 bg-muted font-mono text-base break-words overflow-y-auto ${isGlitching ? 'glitch' : ''}`}
+            <div
+              className={`min-h-[220px] max-h-[500px] p-16 my-8 bg-muted font-mono text-lg break-words overflow-y-auto rounded-3xl border-2 border-border shadow-lg ${isGlitching ? 'glitch' : ''}`}
             >
               {output ? (
-                <pre className="whitespace-pre-wrap font-mono leading-relaxed p-4">{output}</pre>
+                <pre className="whitespace-pre-wrap font-mono leading-loose text-lg">{output}</pre>
               ) : (
-                <span className="text-muted-foreground italic p-4">
+                <span className="text-muted-foreground italic text-lg">
                   awaiting transformation...
                 </span>
               )}

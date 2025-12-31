@@ -5,6 +5,7 @@ import sparkPlugin from "@github/spark/spark-vite-plugin";
 import createIconImportProxy from "@github/spark/vitePhosphorIconProxyPlugin";
 
 export default defineConfig({
+  base: '/dada-art-generator/',
   plugins: [
     react(),
     tailwindcss(),
